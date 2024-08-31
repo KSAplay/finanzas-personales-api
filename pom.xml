@@ -29,5 +29,45 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>9.0.0</version>
 		</dependency>
+		<!-- JERSEY SERVER CORE -->
+		<!--
+		https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>3.1.7</version>
+		</dependency>
+		<!-- JERSEY SERVLET -->
+		<!--
+		https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>3.1.7</version>
+		</dependency>
+		<!-- JERSEY INJECT HK2 -->
+		<!--
+		https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>3.1.7</version>
+		</dependency>
+		<!-- JERSEY JACKSON -->
+		<!--
+		https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>3.1.7</version>
+		</dependency>
+		<!-- JACKSON JSR310 -->
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.17.2</version>
+		</dependency>
 	</dependencies>
 </project>

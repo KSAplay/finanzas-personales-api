@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+	<Resource name="jdbc/FinanzasPersonalesDS"
+		auth="Container"
+		type="javax.sql.DataSource"
+		maxTotal="10"
+		maxIdle="5"
+		maxWaitMillis="10000"
+		username="finanzas_admin"
+		password="FinanzasSeguras2024"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost/finanzas_personales" />
+</Context>
