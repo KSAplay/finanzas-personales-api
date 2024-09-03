@@ -1,4 +1,4 @@
-package com.ksaplay.finanzas.modelos;
+package com.ksaplay.finanzas.modelo;
 
 import java.time.LocalDate;
 import java.util.Objects;

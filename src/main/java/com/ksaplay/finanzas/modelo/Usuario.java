@@ -1,6 +1,7 @@
-package com.ksaplay.finanzas.modelos;
+package com.ksaplay.finanzas.modelo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +27,16 @@ public class Usuario {
 		this.fechaRegistro = fechaRegistro;
 		this.transacciones = transacciones;
 		this.reportes = reportes;
+	}
+	
+	public Usuario(int idUsuario, String email, String password, String nombre, LocalDateTime fechaRegistro) {
+		this.idUsuario = idUsuario;
+		this.email = email;
+		this.password = password;
+		this.nombre = nombre;
+		this.fechaRegistro = fechaRegistro;
+		this.transacciones = new ArrayList<>();
+		this.reportes = new ArrayList<>();
 	}
 
 	public int getIdUsuario() {
