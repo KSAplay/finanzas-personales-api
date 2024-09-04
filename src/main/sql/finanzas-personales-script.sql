@@ -79,10 +79,10 @@ INSERT INTO categorias (nombre) VALUES
 ('Educación');
 
 INSERT INTO transacciones (tipo, monto, fecha, idCategoria, idUsuario) VALUES 
-('ingreso', 1500.00, '2024-08-01', NULL, 1),
+('ingreso', 1500.00, '2024-08-01', 4, 1),
 ('gasto', 50.00, '2024-08-02', 1, 1),
 ('gasto', 75.00, '2024-08-02', 2, 2),
-('ingreso', 2000.00, '2024-08-05', NULL, 2),
+('ingreso', 2000.00, '2024-08-05', 5, 2),
 ('gasto', 100.00, '2024-08-06', 3, 3),
 ('gasto', 250.00, '2024-08-10', 4, 1);
 
