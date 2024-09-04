@@ -1,22 +1,28 @@
 package com.ksaplay.finanzas.controlador;
 
+import java.net.http.HttpRequest;
 import java.sql.SQLException;
 
 import com.ksaplay.finanzas.fachada.UsuarioFachada;
 import com.ksaplay.finanzas.modelo.Usuario;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("usuarios")
 public class ControladorUsuario {
-
+	
 	private UsuarioFachada usuarioFachada = new UsuarioFachada();
 
+	@Context
+    private HttpServletRequest request;
+	
 	@GET
 	@Path("/prueba")
 	public Response prueba() {
@@ -26,7 +32,7 @@ public class ControladorUsuario {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response obtenerUsuario(@PathParam("id") int id) {
+	public Response obtenerUsuario(@PathParam("id") int id, HttpRequest httpRequest) {
 		try {
 			Usuario usuario = usuarioFachada.buscarUsuarioPorId(id);
 			if (usuario == null) {

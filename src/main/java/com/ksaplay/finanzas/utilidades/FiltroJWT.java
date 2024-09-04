@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -17,15 +16,18 @@ public class FiltroJWT implements Filter {
 	private static final String PREFIX_BEARER = "Bearer ";
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		// Inicialización del filtro, si es necesario
-	}
-
-	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+		String path = httpRequest.getRequestURI();
+
+		// Excluir rutas públicas de la validación de JWT
+		if (path.endsWith("/login") || path.endsWith("/register")) {
+			chain.doFilter(request, response); // Permitir acceso sin token
+			return;
+		}
 
 		// Obtener el token JWT del encabezado Authorization
 		String authHeader = httpRequest.getHeader(HEADER_AUTHORIZATION);
@@ -37,7 +39,8 @@ public class FiltroJWT implements Filter {
 				if (usuarioEmail != null) {
 					// Se puede agregar el usuario autenticado al contexto si es necesario
 					httpRequest.setAttribute("usuarioEmail", usuarioEmail);
-					chain.doFilter(request, response); // Continuar con la solicitud
+					// Continuar con la solicitud
+					chain.doFilter(request, response);
 					return;
 				}
 			} catch (Exception e) {
@@ -53,8 +56,4 @@ public class FiltroJWT implements Filter {
 		httpResponse.getWriter().write("No se proporcionó un token de autenticación");
 	}
 
-	@Override
-	public void destroy() {
-		// Limpieza de recursos si es necesario
-	}
 }
