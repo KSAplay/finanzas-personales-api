@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * Este filtro verifica la presencia y validez del token JWT en el encabezado de autorización.
  * Las rutas de login y registro están excluidas de la validación de JWT.
  */
-public class FiltroJWT implements Filter {
+public class FiltroJWT  implements Filter {
 
     private static final String HEADER_AUTHORIZATION = "Authorization";
     private static final String PREFIX_BEARER = "Bearer ";

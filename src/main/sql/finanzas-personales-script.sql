@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS finanzas_personales;
 CREATE DATABASE finanzas_personales;
 USE finanzas_personales;
 
+DROP USER IF EXISTS 'finanzas_admin'@'localhost';
 CREATE USER 'finanzas_admin'@'localhost' IDENTIFIED BY 'FinanzasSeguras2024';
 GRANT SELECT, INSERT, UPDATE, DELETE ON finanzas_personales.* TO 'finanzas_admin'@'localhost';
 GRANT CREATE, ALTER ON finanzas_personales.* TO 'finanzas_admin'@'localhost';
@@ -18,7 +19,12 @@ CREATE TABLE usuarios (
 CREATE TABLE categorias (
     idCategoria INT AUTO_INCREMENT,
     nombre VARCHAR(50) UNIQUE NOT NULL,
-    CONSTRAINT PK_CATEGORIAS PRIMARY KEY (idCategoria)
+    idUsuario INT,
+    CONSTRAINT PK_CATEGORIAS PRIMARY KEY (idCategoria),
+    CONSTRAINT FK_CATEGORIAS_USUARIOS FOREIGN KEY (idUsuario)
+		REFERENCES usuarios(idUsuario)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE transacciones (
@@ -35,7 +41,7 @@ CREATE TABLE transacciones (
         ON UPDATE CASCADE,
     CONSTRAINT FK_TRANSACCIONES_USUARIOS FOREIGN KEY (idUsuario)
 		REFERENCES usuarios(idUsuario)
-		ON DELETE SET NULL
+		ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
@@ -44,10 +50,15 @@ CREATE TABLE presupuestos (
     idCategoria INT,
     monto DECIMAL(10, 2) NOT NULL,
     mes VARCHAR(7) NOT NULL,
+    idUsuario INT,
     CONSTRAINT PK_PRESUPUESTOS PRIMARY KEY (idPresupuesto),
 	CONSTRAINT FK_PRESUPUESTOS_CATEGORIAS FOREIGN KEY (idCategoria)
 		REFERENCES categorias(idCategoria)
-        ON DELETE SET NULL
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+	CONSTRAINT FK_PRESUPUESTOS_USUARIOS FOREIGN KEY (idUsuario)
+		REFERENCES usuarios(idUsuario)
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
@@ -62,28 +73,26 @@ CREATE TABLE reportes (
     CONSTRAINT PK_REPORTES PRIMARY KEY (idReporte),
     CONSTRAINT FK_REPORTES_USUARIOS FOREIGN KEY (idUsuario)
 		REFERENCES usuarios(idUsuario)
-        ON DELETE SET NULL
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
 INSERT INTO usuarios (email, password, nombre) VALUES 
-('ksaplay@correo.com', 'abc123', 'KSAplay'),
-('gabo@correo.com', 'abc123', 'Gabriel'),
-('erick@correo.com', 'abc123', 'Erick');
+('ksaplay@correo.com', '1234', 'KSAplay');
 
-INSERT INTO categorias (nombre) VALUES 
-('Alimentos'),
-('Transporte'),
-('Entretenimiento'),
-('Salud'),
-('Educación');
+INSERT INTO categorias (nombre, idUsuario) VALUES 
+('Alimentos', 1),
+('Transporte', 1),
+('Entretenimiento', 1),
+('Salud', 1),
+('Educación', 1);
 
 INSERT INTO transacciones (tipo, monto, fecha, idCategoria, idUsuario) VALUES 
 ('ingreso', 1500.00, '2024-08-01', 4, 1),
 ('gasto', 50.00, '2024-08-02', 1, 1),
-('gasto', 75.00, '2024-08-02', 2, 2),
-('ingreso', 2000.00, '2024-08-05', 5, 2),
-('gasto', 100.00, '2024-08-06', 3, 3),
+('gasto', 75.00, '2024-08-02', 2, 1),
+('ingreso', 2000.00, '2024-08-05', 5, 1),
+('gasto', 100.00, '2024-08-06', 3, 1),
 ('gasto', 250.00, '2024-08-10', 4, 1);
 
 INSERT INTO presupuestos (idCategoria, monto, mes) VALUES 
@@ -95,5 +104,5 @@ INSERT INTO presupuestos (idCategoria, monto, mes) VALUES
 
 INSERT INTO reportes (idUsuario, desde, hasta, totalIngresos, totalGastos, saldo) VALUES 
 (1, '2024-08-01', '2024-08-31', 1500.00, 50.00, 1450.00),
-(2, '2024-08-01', '2024-08-31', 2000.00, 75.00, 1925.00),
-(3, '2024-08-01', '2024-08-31', 2000.00, 350.00, 1650.00);
+(1, '2024-08-01', '2024-08-31', 2000.00, 75.00, 1925.00),
+(1, '2024-08-01', '2024-08-31', 2000.00, 350.00, 1650.00);
