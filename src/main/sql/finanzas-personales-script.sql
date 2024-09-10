@@ -17,10 +17,10 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE categorias (
-    idCategoria INT AUTO_INCREMENT,
-    nombre VARCHAR(50) UNIQUE NOT NULL,
+    idCategoria INT,
     idUsuario INT,
-    CONSTRAINT PK_CATEGORIAS PRIMARY KEY (idCategoria),
+    nombre VARCHAR(50) UNIQUE NOT NULL,
+    CONSTRAINT PK_CATEGORIAS PRIMARY KEY (idCategoria, idUsuario),
     CONSTRAINT FK_CATEGORIAS_USUARIOS FOREIGN KEY (idUsuario)
 		REFERENCES usuarios(idUsuario)
 		ON DELETE CASCADE
@@ -80,12 +80,12 @@ CREATE TABLE reportes (
 INSERT INTO usuarios (email, password, nombre) VALUES 
 ('ksaplay@correo.com', '1234', 'KSAplay');
 
-INSERT INTO categorias (nombre, idUsuario) VALUES 
-('Alimentos', 1),
-('Transporte', 1),
-('Entretenimiento', 1),
-('Salud', 1),
-('Educación', 1);
+INSERT INTO categorias VALUES 
+(1, 1, 'Alimentos'),
+(2, 1, 'Transporte'),
+(3, 1, 'Entretenimiento'),
+(4, 1, 'Salud'),
+(5, 1, 'Educación');
 
 INSERT INTO transacciones (tipo, monto, fecha, idCategoria, idUsuario) VALUES 
 ('ingreso', 1500.00, '2024-08-01', 4, 1),
