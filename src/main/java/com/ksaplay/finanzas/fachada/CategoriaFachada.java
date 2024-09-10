@@ -15,8 +15,22 @@ public class CategoriaFachada {
 
 	private CategoriaDAO categoriaDAO = new CategoriaDAO();
 
-	public List<Categoria> obtenerCategoriasPorIdUsuario(int idUsuario) throws SQLException {
-		return categoriaDAO.buscarCategoriasPorIdUsuario(idUsuario);
+	public void crearCategoria(Categoria nuevaCategoria) throws SQLException {
+		int numeroMaximo = categoriaDAO.buscarIdCategoriaMaximo(nuevaCategoria.getIdUsuario());
+		nuevaCategoria.setIdCategoria(numeroMaximo);
+		categoriaDAO.insertarCategoria(nuevaCategoria);
+	}
+
+	public List<Categoria> obtenerCategorias(int idUsuario) throws SQLException {
+		return categoriaDAO.buscarCategorias(idUsuario);
+	}
+
+	public boolean actualizarCategoriaPorId(Categoria categoria) throws SQLException {
+		return categoriaDAO.actualizarCategoriaPorId(categoria);
+	}
+
+	public void eliminarCategoriaPorId(int idCategoria, int idUsuario) throws SQLException {
+		categoriaDAO.eliminarCategoriaPorId(idCategoria, idUsuario);
 	}
 
 }
